@@ -12,11 +12,11 @@ import StudentLogin from "./studentContainers/login.container";
 import InstructorLogin from "./instructorContainers/login.container"
 import Pokemons from "./studentContainers/courses.container";
 import StudentRegister from "./studentContainers/register.container";
-import InstructorRegister from "./instructorContainers/register.container";
 import Courses from "./studentContainers/courses.container"
 import StudentProfile from "./studentContainers/profile.container"
 import Locations from "./studentContainers/locations.container";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import InstructorCourses from "./instructorContainers/courses.container"
 
 
 
@@ -26,19 +26,16 @@ const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 ReactDOM.render(
     <Provider store={userStore}>
         <BrowserRouter>
-            <Link to={'/login'}>Login</Link>&nbsp;
-            <Link to={'/test'}>Register</Link>&nbsp;
             <Link to={'/locations'}>Locations</Link>
             <Switch>
-                <Route path="/user/:username/profile" component={StudentProfile}/>
                 <Route path="/login" component={StudentLogin}/>
-                {/*<Route paht="/login/instructor" component={InstructorLogin}/>*/}
-                <Route path="/test" component={StudentRegister}/>
-                {/*<Route path="/register/instructor" component={InstructorRegister}/>*/}
-                {/*<Route path="/user/:username/pokemon" component={Pokemons}/>*/}
-                <Route path="/user/:username/courses" component={Courses}/>
-                <Route path="/locations" component={Locations}/>
                 <Redirect exact from="/" to="login"/>
+                <Route path="/locations" component={Locations}/>
+                <Route path="/test" component={StudentRegister}/>
+                <Route path="/user/:username/courses" component={Courses}/>
+                <Route path="/user/:username/profile" component={StudentProfile}/>
+                <Route path="/instructorLogin" component={InstructorLogin}/>
+                <Route path="/instructor/:username/courses" component={InstructorCourses}/>
             </Switch>
         </BrowserRouter>
     </Provider>,

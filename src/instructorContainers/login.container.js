@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {clear, login} from '../studentActions/user.action'
+import {clear, login} from '../instructorActions/user.action'
 import {Redirect} from "react-router";
 
-class StudentLogin extends React.Component {
+class InstructorLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {username: '', password: ''};
@@ -35,6 +35,7 @@ class StudentLogin extends React.Component {
 
         return (
             <form onSubmit={(e) => this.handleSubmit(e)}>
+                <h2> Instructor Login</h2>
                 {error}
                 <label>
                     Name:
@@ -71,4 +72,4 @@ function mapStateToProps(state, props) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(StudentLogin)
+)(InstructorLogin)

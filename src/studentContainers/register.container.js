@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import {clear, register, validate} from '../studentActions/user.action'
 import {Redirect} from "react-router";
+import {BrowserRouter, Link} from "react-router-dom";
+
 
 class Register extends React.Component {
     constructor(props) {
@@ -35,6 +37,8 @@ class Register extends React.Component {
     }
 
     render() {
+
+
         if (this.props.redirect) {
             return (<Redirect to={this.props.redirect}/>)
         }
@@ -45,32 +49,34 @@ class Register extends React.Component {
         }
 
         return (
-            <form onSubmit={(e) => this.handleSubmit(e)}>
-                {error}
-                <label>
-                    Email:
-                    <input type="text"
-                           disabled={this.props.inFlight}
-                           value={this.state.email}
-                           onChange={(e) => this.handleChange(e, 'email')}/> </label>
-                <label>
-                    Username:
-                    <input type="text"
-                           disabled={this.props.inFlight}
-                           value={this.state.username}
-                           onChange={(e) => this.handleChange(e, 'username')}/> </label>
-                <label> Password:
-                    <input type="password"
-                           disabled={this.props.inFlight}
-                           value={this.state.password}
-                           onChange={(e) => this.handleChange(e, 'password')}/> </label>
-                <label> Validate Password:
-                    <input type="password"
-                           disabled={this.props.inFlight}
-                           value={this.state.validatePassword}
-                           onChange={(e) => this.handleChange(e, 'validatePassword')}/> </label>
-                <input type="submit" value="Submit" disabled={this.props.inFlight}/>
-            </form>
+            <div> <Link to={'/login'}>Login</Link>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                    {error}
+                    <label>
+                        Email:
+                        <input type="text"
+                               disabled={this.props.inFlight}
+                               value={this.state.email}
+                               onChange={(e) => this.handleChange(e, 'email')}/> </label>
+                    <label>
+                        Username:
+                        <input type="text"
+                               disabled={this.props.inFlight}
+                               value={this.state.username}
+                               onChange={(e) => this.handleChange(e, 'username')}/> </label>
+                    <label> Password:
+                        <input type="password"
+                               disabled={this.props.inFlight}
+                               value={this.state.password}
+                               onChange={(e) => this.handleChange(e, 'password')}/> </label>
+                    <label> Validate Password:
+                        <input type="password"
+                               disabled={this.props.inFlight}
+                               value={this.state.validatePassword}
+                               onChange={(e) => this.handleChange(e, 'validatePassword')}/> </label>
+                    <input type="submit" value="Submit" disabled={this.props.inFlight}/>
+                </form>
+            </div>
         );
     }
 }

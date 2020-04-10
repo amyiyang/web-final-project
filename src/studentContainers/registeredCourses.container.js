@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {fetchRegistrationCourses, cancelRegistration} from '../studentActions/registration.action'
-// import {addPokemon, deletePokemon, fetchPokemon} from '../studentActions/pokemon.action'
 import {withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
 
@@ -31,32 +30,49 @@ class Registrations extends React.Component {
     }
 
     _cancelRegistration(id) {
-        this.props.cancelRegistration(id);
+        this.props.cancelRegistration(id, this.props.username,
+            this.props.user.student._id, this.props.user.student.availableCredits);
     }
 
     _renderCourseList() {
-        const registrationRows = this.props.registration.map(registration => (
+        const courseRows = this.props.course.courses;
+        const registrationRows = this.props.registration;
+        // if(registrationRows !== null && registrationRows.length > 0)  {
+        //     for (let i = 0; i < registrationRows.length; i++) {
+        //         for (let j = 0; j < courseRows.length; j++) {
+        //             if (registrationRows[i].courseId = courseRows[j]._id) {
+        //                 registrationRows[i].capacity = courseRows[j].capacity;
+        //                 registrationRows[i].location = courseRows[j].location;
+        //                 registrationRows[i].startTime = courseRows[j].startTime;
+        //                 registrationRows[i].endTime = courseRows[j].endTime;
+        //             }
+        //         }
+        //     }
+        // }
+
+        const rows = registrationRows.map(registration => (
             <tr key={registration._id}>
                 <td>{registration.courseId}</td>
-                {/*<td>{course.capacity}</td>*/}
-                {/*<td>{course.location}</td>*/}
-                {/*<td>{new Date(course.startTime).toUTCString()}</td>*/}
-                {/*<td>{new Date(course.endTime).toUTCString()}</td>*/}
-                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id)}/> </td>
+                <td>{registration.capacity}</td>
+                <td>{registration.location}</td>
+                <td>{new Date(registration.startTime).toUTCString()}</td>
+                <td>{new Date(registration.endTime).toUTCString()}</td>
+                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id, )}/> </td>
             </tr>));
         return (<table>
             <thead>
             <tr>
                 {/*<th>id</th>*/}
                 <th>courseId</th>
-                {/*<th>location</th>*/}
-                {/*<th>start</th>*/}
-                {/*<th>end</th>*/}
-                {/*<th></th>*/}
+                <th>capacity</th>
+                <th>location</th>
+                <th>start</th>
+                <th>end</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            {registrationRows}
+            {rows}
             </tbody>
         </table>)
     }
@@ -66,7 +82,8 @@ class Registrations extends React.Component {
 function mapDispatchToProps(dispatch, props) {
     return {
         getCourses: (username) => dispatch(fetchRegistrationCourses(username)),
-        cancelRegistration: (id) => dispatch(cancelRegistration(id)),
+        cancelRegistration: (courseId, username, studentEmail, currentCredit) =>
+            dispatch(cancelRegistration(courseId, username, studentEmail, currentCredit)),
         setUser: (username) => dispatch(selectUser(username)),
     }
 }
@@ -74,7 +91,10 @@ function mapDispatchToProps(dispatch, props) {
 
 function mapStateToProps(state, props) {
     return { ...state.registration,
-        user: state.user.username}
+        username: state.user.username,
+        course: state.course,
+        user: state.user,
+    }
 };
 
 

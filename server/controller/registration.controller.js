@@ -41,7 +41,7 @@ router.get('/student', function(req, res) {
     const studentId = req.query.studentId;
     return RegistrationAccessor.getRegistrationByStudentId(studentId, req.body)
         .then((response) => {
-            if(response.length > 0) {
+            // if(response.length > 0) {
                 // const courseList = [];
                 // for (const regist of response) {
                 //     CourseAccessor.findCourseById(regist.courseId)
@@ -50,9 +50,9 @@ router.get('/student', function(req, res) {
                 //         })
                 // }
                 return res.status(200).send(response);
-            } else {
-                return res.status(400).send("No Registration");
-            }
+            // } else {
+            //     return res.status(200).send("No Registration");
+            // }
         })
         .catch((error) => console.error(`Something went wrong: ${error}`));
 });

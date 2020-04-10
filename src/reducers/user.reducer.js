@@ -21,6 +21,8 @@ function valid(state = {
 function error(state = '', action) {
     switch (action.type) {
         case 'LOGIN_FAILURE':
+            console.log(action.error);
+            return action.error;
         case 'REGISTER_FAILURE':
             return action.error;
         case 'LOGIN_ATTEMPT':
@@ -45,7 +47,6 @@ function username(state = null, action) {
 function student(state = null, action) {
     switch (action.type) {
         case 'SELECT_A_STUDENT':
-            console.dir(action.student);
             return action.student;
         case 'CLEAR':
             return null;
@@ -61,6 +62,8 @@ function inFlight(state = false, action) {
 function redirect(state = '', action) {
     if (action.type === 'LOGIN_SUCCESS' || action.type === 'REGISTER_SUCCESS') {
         return '/user/' + action.username + '/courses/';
+    } else if (action.type === 'INSTRUCTOR_LOGIN_SUCCESS') {
+        return '/instructor/' + action.username + '/courses';
     }
     return '';
 }
@@ -70,7 +73,6 @@ function loading(state = true, action) {
         case 'REQUEST_STUDENT':
             return true;
         case 'SELECT_A_STUDENT':
-            return ("done");
             return false;
         default:
             return state;

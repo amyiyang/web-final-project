@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import {clear, login} from '../studentActions/user.action'
 import {Redirect} from "react-router";
+import {BrowserRouter, Link} from "react-router-dom";
 
 class StudentLogin extends React.Component {
     constructor(props) {
@@ -30,26 +31,32 @@ class StudentLogin extends React.Component {
 
         let error;
         if (this.props.error) {
-            error = (<h3>{this.props.error}</h3>)
+            error = (<h3>{this.props.error.message}</h3>)
         }
 
+        const instructorLogin = '/instructorLogin';
+
         return (
-            <form onSubmit={(e) => this.handleSubmit(e)}>
-                {error}
-                <label>
-                    Name:
-                    <input type="text"
-                           disabled={this.props.inFlight}
-                           value={this.state.username}
-                           onChange={(e) => this.handleChange(e, 'username')}/> </label>
-                <label> Password:
-                    <input type="password"
-                           disabled={this.props.inFlight}
-                           value={this.state.password}
-                           onChange={(e) => this.handleChange(e, 'password')}/> </label>
-                <input type="submit" value="Submit" disabled={this.props.inFlight}/>
-            </form>
-        );
+            <div>
+                <Link to={'/test'}>Register</Link>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                    {error}
+                    <label>
+                        Name:
+                        <input type="text"
+                               disabled={this.props.inFlight}
+                               value={this.state.username}
+                               onChange={(e) => this.handleChange(e, 'username')}/> </label>
+                    <label> Password:
+                        <input type="password"
+                               disabled={this.props.inFlight}
+                               value={this.state.password}
+                               onChange={(e) => this.handleChange(e, 'password')}/> </label>
+                    <input type="submit" value="Submit" disabled={this.props.inFlight}/>
+                </form>
+                <Link to={instructorLogin}> Instructor Login </Link>
+            </div>
+    );
     }
 }
 

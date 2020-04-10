@@ -15,13 +15,13 @@ router.post('/', (req, res) => {
     StudentModel.getStudentByUserName(req.body.username)
         .then((userNameExists) => {
             if(userNameExists) {
-                return res.status(400).send("username exists");
+                return res.status(404).send({message:"username exists"});
             } else {
                 //check if email exists
                 StudentModel.findStudentById(req.body._id)
                     .then((emailExists) => {
                         if (emailExists) {
-                            return res.status(400).send("email exists");
+                            return res.status(404).send({message:"email exists"});
                         } else {
                             return StudentModel.insertStudent(req.body)
                                 .then((user) => {
@@ -36,6 +36,9 @@ router.post('/', (req, res) => {
 });
 
 router.post('/authenticate', function (req, res) {
+    if(!req.body.username || !req.body.password) {
+        return res.status(404).send({message: "Must write username AND password"});
+    }
     StudentModel.getStudentByUserName(req.body.username)
         .then((user) => {
             // Notice that we're not using bcrypt directly anywhere in the controller.
@@ -44,7 +47,7 @@ router.post('/authenticate', function (req, res) {
                 if (match) {
                     res.send(user);
                 }
-                return res.status(400).send("The password does not match");
+                return res.status(404).send({message:"The password does not match"});
             });
         })
         .catch((error) => console.error(`Something went wrong: ${error}`));

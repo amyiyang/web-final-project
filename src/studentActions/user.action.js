@@ -67,6 +67,7 @@ export function clear() {
 }
 
 export function login(user) {
+    console.dir(user);
     return function (dispatch) {
         dispatch(loginAttempt());
         return Axios.post('/api/student/authenticate', user)
@@ -81,7 +82,8 @@ export function register(_id, username, password) {
     const student ={
         _id: _id,
         username: username,
-        password: password
+        password: password,
+        availableCredits: 5
     }
     return function (dispatch) {
         dispatch(registerAttempt());
@@ -107,6 +109,26 @@ export function getStudent(username) {
         dispatch(loading());
         return Axios.get(`/api/student/username/${username}`)
             .then(response => dispatch(selectStudent(response.data)),
+                error => console.log('An error occurred.', error)
+            )
+    }
+}
+
+export function updateAvailableCredits (adding, username, id, currentCredit) {
+    const student = {
+        availableCredits: currentCredit
+    }
+    if (adding) {
+        student.availableCredits += 1;
+    } else {
+        student.availableCredits -= 1;
+    }
+    console.log("new student");
+    console.dir(student);
+    return function(dispatch) {
+        return Axios.put(`/api/student/${id}`, student)
+            .then(
+                () => dispatch(getStudent(username)),
                 error => console.log('An error occurred.', error)
             )
     }

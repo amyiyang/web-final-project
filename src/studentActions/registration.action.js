@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import{fetchCourses} from "./course.action";
+import {updateAvailableCredits} from "./user.action";
 
 function loadingCourses() {
     return {
@@ -20,37 +21,36 @@ function receiveCourseList(courses) {
 //     }
 // }
 
-export function fetchRegistrationCourses(userName) {
-    const user = 'lulutest';
-    let list = [];
-    let registeredClasses =[];
+export function fetchRegistrationCourses(username) {
     return function(dispatch) {
         dispatch(loadingCourses());
-        Axios.get(`/api/registration/student?studentId=${user}`)
+        Axios.get(`/api/registration/student?studentId=${username}`)
          .then(response => {
-             list = response.data;
-             // allCourses = response.data;
              dispatch(receiveCourseList(response.data))},
              error => console.log('An error occurred.', error)
          )
-        // then(() => {
-        //      for (let i=0; i<list.length;) {
-        //          Axios.get(`/api/course/${list[i].courseId}`)
-        //              .then(response => {
-        //                  dispatch(receiveCourseList(response.data));
-        //                  i++;
-        //                  },
-        //                  error => console.log('An error occurred.', error))
-        //      }
-        // })
     }
 }
 
-export function cancelRegistration(id) {
+export function cancelRegistration(id, username, studentEmail, currentCredit) {
     return function(dispatch) {
         return Axios.delete(`/api/registration/${id}`)
             .then(
-                (response) => dispatch(fetchRegistrationCourses()),
+                (response) => dispatch(fetchRegistrationCourses(username)),
+                error => console.log('An error occurred.', error)
+            ).then(
+                () => dispatch(updateAvailableCredits(true, username, studentEmail, currentCredit)),
+                error => console.log('An error occurred.', error)
+            )
+    }
+}
+
+export function fetchAllRegistration() {
+    return function(dispatch) {
+        dispatch(loadingCourses());
+        Axios.get(`/api/registration/`)
+            .then(response => {
+                    dispatch(receiveCourseList(response.data))},
                 error => console.log('An error occurred.', error)
             )
     }

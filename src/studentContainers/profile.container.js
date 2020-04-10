@@ -4,6 +4,7 @@ import {withRouter} from "react-router";
 import {selectUser, getStudent} from "../studentActions/user.action";
 import Registrations from "./registeredCourses.container";
 import {fetchCourses, registerAClass} from "../studentActions/course.action";
+import {Link} from "react-router-dom";
 
 class Profile extends React.Component {
     constructor() {
@@ -20,11 +21,10 @@ class Profile extends React.Component {
 
     render() {
         if ( this.props.loading === true) {
-            console.dir(this.props.user)
             return <h3>Loading...</h3>
         } else if (this.props.user.student !== null) {
-            console.dir(this.props.student)
             return (<div>
+                <Link to={'/login'}>Logout</Link>
                 <h1>email: {this.props.user.student._id}</h1>
                 <h1>username: {this.props.user.student.username}</h1>
                 <h2>availableCredits: {this.props.user.student.availableCredits}</h2>

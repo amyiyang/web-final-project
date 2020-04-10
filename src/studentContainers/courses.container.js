@@ -99,7 +99,7 @@ import {connect} from 'react-redux';
 import {fetchCourses, registerAClass} from '../studentActions/course.action'
 // import {addPokemon, deletePokemon, fetchPokemon} from '../studentActions/pokemon.action'
 import {Redirect, withRouter} from "react-router";
-import {selectUser} from "../studentActions/user.action";
+import {selectUser, getStudent} from "../studentActions/user.action";
 import Registrations from "./registeredCourses.container";
 import {Link} from "react-router-dom";
 
@@ -114,6 +114,9 @@ class Courses extends React.Component {
         const { username } = match.params;
         this.props.setUser(username);
         this.props.getCourses();
+        this.props.getStudent(username);
+
+
     }
 
     render() {
@@ -122,32 +125,43 @@ class Courses extends React.Component {
         }
 
         const profileLink = '/user/' + this.props.username + '/profile';
+        console.dir(this.props.user);
+
         return (<div>
+            <Link to={'/login'}>Logout</Link>
             <Link to={profileLink}> Profile </Link>
             <h1>These are courses!</h1>
             <div>{this._renderCourseList()}</div>
+            <div>{this._availableCredits()}</div>
             <Registrations/>
+
         </div>);
     }
 
-    // _deletePokemon(id) {
-    //     this.props.deletePokemon(id, this.props.username);
-    // }
-    //
-    // _addPokemon() {
-    //     this.props.addPokemon(this.state, this.props.username);
-    // }
-    //
-    // _handleFormUpdate(event, value) {
-    //     this.setState({
-    //         [value]: event.target.value || '',
-    //     })
-    // }
-
     _registerAClass(id) {
-        this.props.registerAClass(id, this.props.username);
+        this.props.registerAClass(id, this.props.username,
+            this.props.user.student._id, this.props.user.student.availableCredits)
     }
 
+    _isRegistered(courseId) {
+        for(let i = 0; i < this.props.registration.registration.length; i++){
+            let course = this.props.registration.registration[i];
+            if(course.courseId === courseId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    _availableCredits() {
+        if ( this.props.loading === true) {
+            return (<h3>Loading...</h3>)
+        } else if (this.props.user.student !== null) {
+            return <h2>available Credits: {this.props.user.student.availableCredits}</h2>
+        } else {
+            return '';
+        }
+    }
     _renderCourseList() {
         const coursesRows = this.props.courses.map(course => (
             <tr key={course._id}>
@@ -156,7 +170,10 @@ class Courses extends React.Component {
                 <td>{course.location}</td>
                 <td>{new Date(course.startTime).toUTCString()}</td>
                 <td>{new Date(course.endTime).toUTCString()}</td>
-                <td><input type='button' value='Register' onClick={() => this._registerAClass(course._id)}/> </td>
+                <td><input type='button' value='Register'
+                           disabled={this._isRegistered(course._id) ||
+                           (this.props.user.student !== null && this.props.user.student.availableCredits === 0)}
+                           onClick={() => this._registerAClass(course._id)}/> </td>
             </tr>));
         return (<table>
             <thead>
@@ -187,17 +204,22 @@ function mapDispatchToProps(dispatch, props) {
     return {
         // getPokemon: (username) => dispatch(fetchPokemon(username)),
         getCourses: () => dispatch(fetchCourses()),
-        registerAClass: (courseId, username) => dispatch(registerAClass(courseId, username)),
+        registerAClass: (courseId, username, studentEmail, currentCredit) =>
+            dispatch(registerAClass(courseId, username, studentEmail, currentCredit)),
         // addPokemon: (pokemon, username) => dispatch(addPokemon(pokemon, username)),
         // deletePokemon: (id, username) => dispatch(deletePokemon(id, username)),
         setUser: (username) => dispatch(selectUser(username)),
+        getStudent: (username) => dispatch(getStudent(username))
     }
 }
 
 
 function mapStateToProps(state, props) {
     return { ...state.course,
-        username: state.user.username}
+        username: state.user.username,
+        registration: state.registration,
+        user: state.user,
+    }
 };
 
 
