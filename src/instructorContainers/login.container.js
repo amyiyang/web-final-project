@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import {clear, login} from '../instructorActions/user.action'
 import {Redirect} from "react-router";
+import {Link} from "react-router-dom";
 
 class InstructorLogin extends React.Component {
     constructor(props) {
@@ -30,10 +31,13 @@ class InstructorLogin extends React.Component {
 
         let error;
         if (this.props.error) {
-            error = (<h3>{this.props.error}</h3>)
+            error = (<h3>{this.props.error.message}</h3>)
         }
 
         return (
+            <div>
+
+
             <form onSubmit={(e) => this.handleSubmit(e)}>
                 <h2> Instructor Login</h2>
                 {error}
@@ -50,6 +54,8 @@ class InstructorLogin extends React.Component {
                            onChange={(e) => this.handleChange(e, 'password')}/> </label>
                 <input type="submit" value="Submit" disabled={this.props.inFlight}/>
             </form>
+                <Link to={'/login'}>Student Login</Link>
+            </div>
         );
     }
 }

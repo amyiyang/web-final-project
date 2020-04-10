@@ -26,6 +26,7 @@ class Courses extends React.Component {
 
         const profileLink = '/user/' + this.props.username + '/profile';
         return (<div>
+            <Link to={'/instructorLogin'}>Logout</Link>
             <Link to={profileLink}> Profile </Link>
             <h1>These are courses!</h1>
             <div>{this._renderCourseList()}</div>
