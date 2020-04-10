@@ -67,8 +67,8 @@ router.put('/:id', function (req, res) {
             (error) => res.status(404).send(`Error updating Student:${error}`))
 });
 
-router.get('/:id', function (req, res) {
-    return StudentModel.findStudentById(req.params.id)
+router.get('/username/:id', function (req, res) {
+    return StudentModel.getStudentByUserName(req.params.id)
         .then((response) => res.status(200).send(response),
             (error) =>  res.status(404).send(`Error finding Student:${error}`));
 });

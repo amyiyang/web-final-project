@@ -42,6 +42,18 @@ function username(state = null, action) {
     }
 }
 
+function student(state = null, action) {
+    switch (action.type) {
+        case 'SELECT_A_STUDENT':
+            console.dir(action.student);
+            return action.student;
+        case 'CLEAR':
+            return null;
+        default:
+            return state;
+    }
+}
+
 function inFlight(state = false, action) {
     return action.type === 'LOGIN_ATTEMPT';
 }
@@ -53,11 +65,26 @@ function redirect(state = '', action) {
     return '';
 }
 
+function loading(state = true, action) {
+    switch (action.type) {
+        case 'REQUEST_STUDENT':
+            return true;
+        case 'SELECT_A_STUDENT':
+            return ("done");
+            return false;
+        default:
+            return state;
+    }
+
+}
+
 export default combineReducers({
     error,
     inFlight,
     redirect,
     username,
-    valid
+    valid,
+    student,
+    loading
 });
 

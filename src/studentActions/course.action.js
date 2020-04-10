@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import{fetchRegistrationCourses} from "./registration.action";
 
 function loadingCourses() {
     return {
@@ -39,8 +40,9 @@ export function registerAClass(courseId, studentId){
     return function(dispatch) {
         dispatch(inFlight());
         return Axios.post(`/api/registration`, requestBody)
-            // .then(response => dispatch(),
-            //     error => console.log('An error occurred.', error)
-            // );
+           .then(
+                () => dispatch(fetchRegistrationCourses()),
+                error => console.log('An error occurred.', error)
+            )
     }
 }

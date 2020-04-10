@@ -14,6 +14,8 @@ import Pokemons from "./studentContainers/courses.container";
 import StudentRegister from "./studentContainers/register.container";
 import InstructorRegister from "./instructorContainers/register.container";
 import Courses from "./studentContainers/courses.container"
+import StudentProfile from "./studentContainers/profile.container"
+
 
 
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
@@ -21,9 +23,10 @@ const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 ReactDOM.render(
     <Provider store={userStore}>
         <BrowserRouter>
-        <Link to={'/login'}>Login</Link>&nbsp;
-        <Link to={'/test'}>Register</Link>
+            <Link to={'/login'}>Login</Link>&nbsp;
+            <Link to={'/test'}>Register</Link>
             <Switch>
+                <Route path="/user/:username/profile" component={StudentProfile}/>
                 <Route path="/login" component={StudentLogin}/>
                 {/*<Route paht="/login/instructor" component={InstructorLogin}/>*/}
                 <Route path="/test" component={StudentRegister}/>

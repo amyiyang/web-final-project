@@ -98,8 +98,10 @@ import React from "react";
 import {connect} from 'react-redux';
 import {fetchCourses, registerAClass} from '../studentActions/course.action'
 // import {addPokemon, deletePokemon, fetchPokemon} from '../studentActions/pokemon.action'
-import {withRouter} from "react-router";
+import {Redirect, withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
+import Registrations from "./registeredCourses.container";
+import {Link} from "react-router-dom";
 
 class Courses extends React.Component {
     constructor() {
@@ -119,9 +121,12 @@ class Courses extends React.Component {
             return <h3>Loading...</h3>
         }
 
+        const profileLink = '/user/' + this.props.username + '/profile';
         return (<div>
+            <Link to={profileLink}> Profile </Link>
             <h1>These are courses!</h1>
             <div>{this._renderCourseList()}</div>
+            <Registrations/>
         </div>);
     }
 
@@ -156,7 +161,7 @@ class Courses extends React.Component {
         return (<table>
             <thead>
             <tr>
-                <th>id</th>studentId
+                <th>id</th>
                 <th>capacity</th>
                 <th>location</th>
                 <th>start</th>

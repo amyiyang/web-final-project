@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
             (error) => res.status(404).send(`Error creating Registration:${error}`))
 });
 
-router.get('/course/:id', function (req, res) {
+router.get('/registration/:id', function (req, res) {
     return RegistrationAccessor.findRegistrationById(req.params.id)
         .then((response) => res.status(200).send(response),
             (error) =>  res.status(404).send(`Error finding Registration:${error}`));
@@ -37,9 +37,8 @@ router.put('/:id', function (req, res) {
             (error) => res.status(404).send(`Error updating Registration:${error}`))
 });
 
-router.get('/students', function(req, res) {
-    const studentId = req.body.studentId;
-    // return res.status(200).send(studentId);
+router.get('/student', function(req, res) {
+    const studentId = req.query.studentId;
     return RegistrationAccessor.getRegistrationByStudentId(studentId, req.body)
         .then((response) => {
             if(response.length > 0) {

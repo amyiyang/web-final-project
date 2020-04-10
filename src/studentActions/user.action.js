@@ -48,6 +48,13 @@ export function selectUser(username) {
     }
 }
 
+export function selectStudent(student) {
+    return {
+        type: "SELECT_A_STUDENT",
+        student
+    }
+}
+
 export function validate(user) {
     return  {...user,
         type: 'VALIDATE_REGISTER_USER'}
@@ -85,5 +92,22 @@ export function register(_id, username, password) {
                 },
                 error => dispatch(registerFailure(error.response.data.message))
             );
+    }
+}
+
+export function loading(){
+    return {
+        type: "REQUEST_STUDENT"
+    }
+}
+
+export function getStudent(username) {
+    console.log(username)
+    return function(dispatch) {
+        dispatch(loading());
+        return Axios.get(`/api/student/username/${username}`)
+            .then(response => dispatch(selectStudent(response.data)),
+                error => console.log('An error occurred.', error)
+            )
     }
 }
