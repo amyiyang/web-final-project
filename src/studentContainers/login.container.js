@@ -38,7 +38,7 @@ class StudentLogin extends React.Component {
 
         return (
             <div>
-                <Link to={'/test'}>Register</Link>
+                <Link to={'/register'}>Register</Link>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     {error}
                     <label>

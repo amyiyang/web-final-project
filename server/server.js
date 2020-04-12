@@ -10,7 +10,7 @@ const instructor = require('./controller/instructor.controller');
 const app = express();
 
 const mongoose = require('mongoose');
-
+const session = require('express-session');
 
 // This is the default address for MongoDB.
 // Make sure MongoDB is running!
@@ -24,7 +24,7 @@ const db = mongoose.connection;
 // This will create the connection, and throw an error if it doesn't work
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
-
+app.use(session({secret: process.env.SUPER_SECRET}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
