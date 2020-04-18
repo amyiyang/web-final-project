@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    req.body.studentId = req.username;
     return RegistrationAccessor.insertRegistration(req.body)
         .then((response) => res.status(200).send(response),
             (error) => res.status(404).send(`Error creating Registration:${error}`))
@@ -38,17 +39,11 @@ router.put('/:id', function (req, res) {
 });
 
 router.get('/student', function(req, res) {
-    const studentId = req.query.studentId;
+    const studentId = req.username;
+    console.log("backend studentID" + studentId);
+
     return RegistrationAccessor.getRegistrationByStudentId(studentId, req.body)
         .then((response) => {
-            // if(response.length > 0) {
-                // const courseList = [];
-                // for (const regist of response) {
-                //     CourseAccessor.findCourseById(regist.courseId)
-                //         .then((response) => {
-                //             courseList.push(courseList);
-                //         })
-                // }
                 return res.status(200).send(response);
             // } else {
             //     return res.status(200).send("No Registration");

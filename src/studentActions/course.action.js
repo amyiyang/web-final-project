@@ -33,20 +33,19 @@ export function fetchCourses() {
 
 
 
-export function registerAClass(courseId, studentId, studentEmail, currentCredit){
+export function registerAClass(courseId, currentCredit){
     const requestBody = {
         courseId: courseId,
-        studentId: studentId
     }
     return function(dispatch) {
         dispatch(inFlight());
         return Axios.post(`/api/registration`, requestBody)
            .then(
-                () => dispatch(fetchRegistrationCourses(studentId)),
+                () => dispatch(fetchRegistrationCourses()),
                 error => console.log('An error occurred.', error)
             )
             .then(
-                () => dispatch(updateAvailableCredits(false, studentId, studentEmail, currentCredit)),
+                () => dispatch(updateAvailableCredits(false, currentCredit)),
                 error => console.log('An error occurred.', error)
             )
     }

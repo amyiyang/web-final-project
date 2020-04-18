@@ -62,6 +62,19 @@ router.post('/authenticate', function (req, res) {
         .catch((error) => console.error(`Something went wrong: ${error}`));
 });
 
+router.post('/logOut', function(req, res){
+
+    if(req.session) {
+        req.session.destroy(function(error) {
+          if(error) {
+              return next(error);
+          } else {
+              return res.status(200).send(req.session);
+          }
+        })
+    }
+})
+
 router.get('/loggedIn', authParser, function(req, res) {
     return res.sendStatus(200);
 });
@@ -76,15 +89,18 @@ router.delete('/:id', function (req, res) {
             (error) => res.status(404).send(`Error deleting Student:${error}`))
 });
 
-router.put('/:id', function (req, res) {
-    const id = req.params.id;
-    return StudentModel.updateStudent(id, req.body)
+router.put('/', authParser, function (req, res) {
+    const username = req.username;
+    console.log("backend" + username);
+    StudentModel.updateStudent(username, req.body)
         .then((response) => res.status(200).send(response),
             (error) => res.status(404).send(`Error updating Student:${error}`))
 });
 
-router.get('/username/:id', function (req, res) {
-    return StudentModel.getStudentByUserName(req.params.id)
+router.get('/username/', authParser, function (req, res) {
+    const username = req.username;
+
+    return StudentModel.getStudentByUserName(username)
         .then((response) => res.status(200).send(response),
             (error) =>  res.status(404).send(`Error finding Student:${error}`));
 });

@@ -19,17 +19,17 @@ StudentSchema.pre("save", function(next) {
 });
 
 
-StudentSchema.pre("update", function(next) {
-    // this logic below allows us to protect the password
-    // in the case of a user update, but
-    // where the password
-    if(!this.isModified("password")) {
-        console.log("hi");
-        return next();
-    }
-    this.password = bcrypt.hashSync(this.password, 10);
-    next();
-});
+// StudentSchema.pre("update", function(next) {
+//     // this logic below allows us to protect the password
+//     // in the case of a user update, but
+//     // where the password
+//     if(!this.isModified("password")) {
+//         console.log("hi");
+//         return next();
+//     }
+//     this.password = bcrypt.hashSync(this.password, 10);
+//     next();
+// });
 
 
 

@@ -21,8 +21,8 @@ function assignmentLoading(state = true, action) {
         default:
             return state;
     }
-
 }
+
 
 
 export default combineReducers({

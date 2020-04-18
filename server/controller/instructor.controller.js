@@ -67,6 +67,13 @@ router.delete('/:id', function (req, res) {
             (error) => res.status(404).send(`Error deleting Instructor:${error}`))
 });
 
+router.get('/username/', authParser, function (req, res) {
+    const username = req.username;
+    return InstructorModel.getInstructorByUserName(username)
+        .then((response) => res.status(200).send(response),
+            (error) =>  res.status(404).send(`Error finding Instructor:${error}`));
+});
+
 
 
 module.exports = router;

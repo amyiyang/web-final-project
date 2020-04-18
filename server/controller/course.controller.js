@@ -11,7 +11,7 @@ router.get('/', authParser, (req, res) => {
 
 });
 
-router.post('/', authParser, (req, res) => {
+router.post('/', (req, res) => {
     return CourseAccessor.insertCourse(req.body)
         .then((response) => res.status(200).send(response),
             (error) => res.status(404).send(`Error creating Course:${error}`))

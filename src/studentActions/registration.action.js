@@ -21,10 +21,10 @@ function receiveCourseList(courses) {
 //     }
 // }
 
-export function fetchRegistrationCourses(username) {
+export function fetchRegistrationCourses() {
     return function(dispatch) {
         dispatch(loadingCourses());
-        Axios.get(`/api/registration/student?studentId=${username}`)
+        Axios.get(`/api/registration/student`)
          .then(response => {
              dispatch(receiveCourseList(response.data))},
              error => console.log('An error occurred.', error)
@@ -32,14 +32,14 @@ export function fetchRegistrationCourses(username) {
     }
 }
 
-export function cancelRegistration(id, username, studentEmail, currentCredit) {
+export function cancelRegistration(id, studentEmail, currentCredit) {
     return function(dispatch) {
         return Axios.delete(`/api/registration/${id}`)
             .then(
-                (response) => dispatch(fetchRegistrationCourses(username)),
+                (response) => dispatch(fetchRegistrationCourses()),
                 error => console.log('An error occurred.', error)
             ).then(
-                () => dispatch(updateAvailableCredits(true, username, studentEmail, currentCredit)),
+                () => dispatch(updateAvailableCredits(true, studentEmail, currentCredit)),
                 error => console.log('An error occurred.', error)
             )
     }

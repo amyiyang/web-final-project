@@ -5,6 +5,7 @@ import {selectUser, getStudent} from "../studentActions/user.action";
 import Registrations from "./registeredCourses.container";
 import {fetchCourses, registerAClass} from "../studentActions/course.action";
 import {Link} from "react-router-dom";
+import LogoutContainer from "../components/logout.component";
 
 class Profile extends React.Component {
     constructor() {
@@ -13,10 +14,10 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        const {match} = this.props;
-        const {username} = match.params;
-        this.props.setUser(username);
-        this.props.getStudent(username);
+        // const {match} = this.props;
+        // const {username} = match.params;
+        // this.props.setUser(username);
+        this.props.getStudent();
     }
 
     render() {
@@ -24,7 +25,8 @@ class Profile extends React.Component {
             return <h3>Loading...</h3>
         } else if (this.props.user.student !== null) {
             return (<div>
-                <Link to={'/login'}>Logout</Link>
+                <LogoutContainer/>
+                <Link to={'/courses'}> Courses </Link>
                 <h1>email: {this.props.user.student._id}</h1>
                 <h1>username: {this.props.user.student.username}</h1>
                 <h2>availableCredits: {this.props.user.student.availableCredits}</h2>
@@ -43,9 +45,8 @@ class Profile extends React.Component {
 function mapDispatchToProps(dispatch, props) {
     return {
         // getPokemon: (username) => dispatch(fetchPokemon(username)),
-        getCourses: () => dispatch(fetchCourses()),
-        setUser: (username) => dispatch(selectUser(username)),
-        getStudent: (username) => dispatch(getStudent(username))
+        // setUser: (username) => dispatch(selectUser(username)),
+        getStudent: (username) => dispatch(getStudent())
     }
 }
 

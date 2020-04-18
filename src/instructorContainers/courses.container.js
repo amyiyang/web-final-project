@@ -5,6 +5,7 @@ import {fetchCoursesAndAssignment} from '../instructorActions/assignment.action'
 import {Redirect, withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
 import {Link} from "react-router-dom";
+import LogoutContainer from "../components/logout.component";
 
 class Courses extends React.Component {
     constructor() {
@@ -13,10 +14,7 @@ class Courses extends React.Component {
     }
 
     componentDidMount() {
-        const { match } = this.props;
-        const { username } = match.params;
-        this.props.setUser(username);
-        this.props.getCourses(username);
+        this.props.getCourses();
     }
 
     render() {
@@ -24,13 +22,15 @@ class Courses extends React.Component {
             return <h3>Loading...</h3>
         }
 
-        const profileLink = '/user/' + this.props.username + '/profile';
+        const profileLink = '/instructor/profile';
         return (<div>
-            <Link to={'/instructorLogin'}>Logout</Link>
+            <LogoutContainer/>
             <Link to={profileLink}> Profile </Link>
             <h1>These are courses!</h1>
             <div>{this._renderCourseList()}</div>
-            <button> Create a new class</button>
+            <Link to={'/creatNewClass'}>
+                <button> Create a new class</button>
+            </Link>
         </div>);
     }
 
@@ -97,12 +97,7 @@ class Courses extends React.Component {
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        // getPokemon: (username) => dispatch(fetchPokemon(username)),
-        getCourses: (instructorId) => dispatch(fetchCoursesAndAssignment(instructorId)),
-        // registerAClass: (courseId, username) => dispatch(registerAClass(courseId, username)),
-        // addPokemon: (pokemon, username) => dispatch(addPokemon(pokemon, username)),
-        // deletePokemon: (id, username) => dispatch(deletePokemon(id, username)),
-        setUser: (username) => dispatch(selectUser(username)),
+        getCourses: () => dispatch(fetchCoursesAndAssignment()),
     }
 }
 

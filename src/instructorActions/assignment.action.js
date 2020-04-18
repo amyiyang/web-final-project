@@ -2,7 +2,7 @@ import Axios from "axios";
 import {fetchAllRegistration, fetchRegistrationCourses} from "../studentActions/registration.action";
 import {fetchCourses} from "../studentActions/course.action"
 
-export function fetchCoursesAndAssignment(instructorId){
+export function fetchCoursesAndAssignment(){
     return function(dispatch) {
         return dispatch(fetchCourses())
             .then(
@@ -38,5 +38,38 @@ export function fetchAllAssignment() {
                 dispatch(receiveAssignment(response.data))
             },  error =>console.log('An error occurred.', error)
             )
+    }
+}
+
+export function validate(course) {
+    return  {...course,
+        type: 'VALIDATE_COURSE'
+    }
+}
+
+function createAssignment() {
+    return {
+        type: 'CREATE_ASSIGNMENT'
+    }
+}
+
+export function create(instructor, id, capacity, location, startTime, endTime) {
+    const course ={
+        _id: id,
+        capacity: capacity,
+        location: location,
+        startTime: startTime,
+        endTime: endTime
+    }
+    const assignment ={
+        instructorId: instructor,
+        courseId: id
+    }
+    return function (dispatch) {
+        return Axios.post(`/api/course/`, course)
+            .then(response => {
+                    Axios.post(`/api/assignment/`, assignment)
+                }
+            ).then(response => dispatch(createAssignment()));
     }
 }

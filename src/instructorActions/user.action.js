@@ -48,10 +48,10 @@ export function selectUser(username) {
     }
 }
 
-export function selectStudent(student) {
+export function selectStudent(user) {
     return {
-        type: "SELECT_A_STUDENT",
-        student
+        type: "SELECT_A_INSTRUCTOR",
+        user
     }
 }
 
@@ -76,6 +76,17 @@ export function login(user) {
     }
 }
 
+export function getInstructor() {
+    console.log("dispatch instructor")
+    return function(dispatch) {
+        dispatch(loading());
+        return Axios.get(`/api/instructor/username/`)
+            .then(response => dispatch(selectStudent(response.data)),
+                error => console.log('An error occurred.', error)
+            )
+    }
+}
+
 // export function register(_id, username, password) {
 //
 //     const student ={
@@ -95,11 +106,11 @@ export function login(user) {
 //     }
 // }
 
-// export function loading(){
-//     return {
-//         type: "REQUEST_STUDENT"
-//     }
-// }
+export function loading(){
+    return {
+        type: "REQUEST_INSTRUCTOR"
+    }
+}
 
 // export function getStudent(username) {
 //     console.log(username)

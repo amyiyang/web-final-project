@@ -40,6 +40,12 @@ function registerFailure(error) {
     }
 }
 
+function logOutSuccess() {
+    return {
+        type: "LOGOUT_SUCCESS"
+    }
+}
+
 
 export function selectUser(username) {
     return {
@@ -103,18 +109,18 @@ export function loading(){
     }
 }
 
-export function getStudent(username) {
-    console.log(username)
+export function getStudent() {
     return function(dispatch) {
         dispatch(loading());
-        return Axios.get(`/api/student/username/${username}`)
+        return Axios.get(`/api/student/username/`)
             .then(response => dispatch(selectStudent(response.data)),
                 error => console.log('An error occurred.', error)
             )
     }
 }
 
-export function updateAvailableCredits (adding, username, id, currentCredit) {
+export function updateAvailableCredits (adding, currentCredit) {
+    console.log('credit' + currentCredit);
     const student = {
         availableCredits: currentCredit
     }
@@ -126,10 +132,22 @@ export function updateAvailableCredits (adding, username, id, currentCredit) {
     console.log("new student");
     console.dir(student);
     return function(dispatch) {
-        return Axios.put(`/api/student/${id}`, student)
+        return Axios.put(`/api/student/`, student)
             .then(
-                () => dispatch(getStudent(username)),
+                () => dispatch(getStudent()),
                 error => console.log('An error occurred.', error)
             )
+    }
+}
+
+
+export function logOut() {
+    console.log("clicked log out");
+    return function (dispatch) {
+        return Axios.post('/api/student/logOut')
+            .then(response => {
+                    dispatch(logOutSuccess())
+                },
+                error => console.log(error));
     }
 }

@@ -6,6 +6,7 @@ module.exports = function(req, res, next) {
     if (!username) {
         res.status(401).send('Unauthorized: No session available');
     } else {
+        console.log('middleware' + username);
         req.username = username;
         next();
     }

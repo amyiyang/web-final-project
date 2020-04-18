@@ -13,6 +13,13 @@ function valid(state = {
                 return {...state, message: 'The passwords must match.'};
             }
             return { success: true, message: '', };
+        case 'VALIDATE_COURSE':
+            console.dir(action)
+            if (!action.instructor || !action.id || !action.capacity || !action.location
+            || !action.startTime|| !action.endTime) {
+                return {...state, message: 'All fields are required'};
+            }
+            return {success: true, message: '',};
         default:
             return {success: false, message: ''};
     }
@@ -44,6 +51,19 @@ function username(state = null, action) {
     }
 }
 
+function instructor(state = null, action) {
+    switch (action.type) {
+        case 'SELECT_A_INSTRUCTOR':
+            return action.user;
+        case 'CLEAR':
+            return null;
+        default:
+            return state;
+    }
+}
+
+
+
 function student(state = null, action) {
     switch (action.type) {
         case 'SELECT_A_STUDENT':
@@ -61,9 +81,11 @@ function inFlight(state = false, action) {
 
 function redirect(state = '', action) {
     if (action.type === 'LOGIN_SUCCESS' || action.type === 'REGISTER_SUCCESS') {
-        return '/user/' + action.username + '/courses/';
-    } else if (action.type === 'INSTRUCTOR_LOGIN_SUCCESS') {
-        return '/instructor/' + action.username + '/courses';
+        return '/courses/';
+    } else if (action.type === 'INSTRUCTOR_LOGIN_SUCCESS' || action.type === 'CREATE_ASSIGNMENT') {
+        return '/instructor/courses';
+    } else if (action.type === 'LOGOUT_SUCCESS') {
+        return '/login';
     }
     return '';
 }
@@ -72,13 +94,18 @@ function loading(state = true, action) {
     switch (action.type) {
         case 'REQUEST_STUDENT':
             return true;
+        case 'REQUEST_INSTRUCTOR':
+            return true;
         case 'SELECT_A_STUDENT':
+            return false;
+        case 'SELECT_A_INSTRUCTOR':
             return false;
         default:
             return state;
     }
 
 }
+
 
 export default combineReducers({
     error,
@@ -87,6 +114,7 @@ export default combineReducers({
     username,
     valid,
     student,
-    loading
+    loading,
+    instructor
 });
 

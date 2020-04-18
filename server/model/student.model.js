@@ -20,9 +20,14 @@ function findStudentById(id) {
     return StudentModel.findById(id).exec();
 }
 
-function updateStudent(id, student) {
-    return StudentModel.update({_id: id}, {$set: student})
+function updateStudent(username, student) {
+    return StudentModel.updateOne({username: username}, {$set: student})
 }
+
+
+// function updateStudent(id, student) {
+//     return StudentModel.update({_id: id}, {$set: student})
+// }
 
 function deleteStudent(id) {
     return StudentModel.deleteOne({_id: id});

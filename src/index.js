@@ -18,6 +18,8 @@ import Locations from "./studentContainers/locations.container";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InstructorCourses from "./instructorContainers/courses.container";
 import LoggedInComponent from "./components/loggedin.component";
+import InstructorProfile from "./instructorContainers/profile.container"
+import CreatNewClass from "./instructorContainers/createCourse.container"
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 
@@ -31,10 +33,12 @@ ReactDOM.render(
                 <Redirect exact from="/" to="login"/>
                 <Route path="/locations" component={Locations}/>
                 <Route path="/register" component={StudentRegister}/>
-                <Route path="/user/:username/courses" component={LoggedInComponent(Courses)}/>
-                <Route path="/user/:username/profile" component={LoggedInComponent(StudentProfile)}/>
+                <Route path="/courses" component={LoggedInComponent(Courses)}/>
+                <Route path="/profile" component={LoggedInComponent(StudentProfile)}/>
                 <Route path="/instructorLogin" component={InstructorLogin}/>
-                <Route path="/instructor/:username/courses" component={LoggedInComponent(InstructorCourses)}/>
+                <Route path="/instructor/courses" component={LoggedInComponent(InstructorCourses)}/>
+                <Route path="/instructor/profile" component={LoggedInComponent(InstructorProfile)}/>
+                <Route path="/creatNewClass" component={LoggedInComponent(CreatNewClass)}/>
             </Switch>
         </BrowserRouter>
     </Provider>,

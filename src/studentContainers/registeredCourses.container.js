@@ -12,10 +12,8 @@ class Registrations extends React.Component {
     }
 
     componentDidMount() {
-        const { match } = this.props;
-        const { username } = match.params;
-        this.props.setUser(username);
-        this.props.getCourses(username);
+
+        this.props.getCourses();
     }
 
     render() {
@@ -30,8 +28,7 @@ class Registrations extends React.Component {
     }
 
     _cancelRegistration(id) {
-        this.props.cancelRegistration(id, this.props.username,
-            this.props.user.student._id, this.props.user.student.availableCredits);
+        this.props.cancelRegistration(id, this.props.user.student.availableCredits);
     }
 
     _renderCourseList() {
@@ -57,7 +54,7 @@ class Registrations extends React.Component {
                 <td>{registration.location}</td>
                 <td>{new Date(registration.startTime).toUTCString()}</td>
                 <td>{new Date(registration.endTime).toUTCString()}</td>
-                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id, )}/> </td>
+                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id)}/> </td>
             </tr>));
         return (<table>
             <thead>
@@ -81,10 +78,9 @@ class Registrations extends React.Component {
 
 function mapDispatchToProps(dispatch, props) {
     return {
-        getCourses: (username) => dispatch(fetchRegistrationCourses(username)),
-        cancelRegistration: (courseId, username, studentEmail, currentCredit) =>
-            dispatch(cancelRegistration(courseId, username, studentEmail, currentCredit)),
-        setUser: (username) => dispatch(selectUser(username)),
+        getCourses: () => dispatch(fetchRegistrationCourses()),
+        cancelRegistration: (courseId, currentCredit) =>
+            dispatch(cancelRegistration(courseId,  currentCredit)),
     }
 }
 
