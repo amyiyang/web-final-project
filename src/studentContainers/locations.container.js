@@ -4,6 +4,7 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow, MarkerWithLabel } from 'goog
 import {clear, login} from "../studentActions/user.action";
 
 import CurrentLocation from './Map';
+import {Nav, Navbar} from "react-bootstrap";
 
 class Locations extends React.Component {
     constructor(props) {
@@ -49,8 +50,22 @@ class Locations extends React.Component {
 
         return (
             <div id="locations">
-
-                <h1>locations get</h1>
+                <Navbar bg="dark" variant="dark" sticky="top">
+                    <Navbar.Brand href='/'>
+                        <img
+                            alt=""
+                            src={require('../img/whiteLogo.png')}
+                            width="30%"
+                            height="30%"
+                            className="d-inline-block align-top"
+                        />
+                    </Navbar.Brand>
+                    <Nav className="justify-content-end"  display="flex">
+                        <Nav.Link href={'/'}>Student Login</Nav.Link>
+                        <Nav.Link href={'/instructorLogin'}>Instructor Login</Nav.Link>
+                        <Nav.Link href={'/locations'} active>Locations</Nav.Link>
+                    </Nav>
+                </Navbar>
                 <CurrentLocation
                     centerAroundCurrentLocation
                     google={this.props.google}

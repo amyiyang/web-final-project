@@ -27,7 +27,7 @@ const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 ReactDOM.render(
     <Provider store={userStore}>
         <BrowserRouter>
-            <Link to={'/locations'}>Locations</Link>
+            {/*<Link to={'/locations'}>Locations</Link>*/}
             <Switch>
                 <Route path="/login" component={StudentLogin}/>
                 <Redirect exact from="/" to="login"/>
