@@ -7,6 +7,7 @@ import {selectUser, getStudent} from "../studentActions/user.action";
 import Registrations from "./registeredCourses.container";
 import {Link} from "react-router-dom";
 import LogoutContainer from "../components/logout.component";
+import {Nav, Navbar, Container, Row, Col, Form, Table} from "react-bootstrap";
 
 class Courses extends React.Component {
     constructor() {
@@ -27,15 +28,66 @@ class Courses extends React.Component {
         const profileLink = '/profile';
         console.dir(this.props.user);
 
-        return (<div>
-            <LogoutContainer/>
-            <Link to={profileLink}> Profile </Link>
-            <h1>These are courses!</h1>
-            <div>{this._renderCourseList()}</div>
-            <div>{this._availableCredits()}</div>
-            <Registrations/>
+        return (
+            <div>
+                <Navbar bg="dark" variant="dark" sticky="top">
+                    <Navbar.Brand href='/'>
+                        <img
+                            alt=""
+                            src={require('../img/whiteLogo.png')}
+                            width="30%"
+                            height="30%"
+                            className="d-inline-block align-top"
+                        />
+                    </Navbar.Brand>
+                    <Nav className="justify-content-end"  display="flex">
+                        <Nav.Link className="navItems" href={'/courses'} active>Courses</Nav.Link>
+                        <Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>
+                        <Nav.Link className="navItems" href={'/profile'}>Profile</Nav.Link>
+                        <LogoutContainer />
+                        {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}
+                    </Nav>
+                </Navbar>
+                <Container>
+                    <div className="table">
+                    <Row>
+                        <Col lg={1} sm={0}></Col>
+                        <Col lg={10} sm={12}>
+                            <h2>All Courses: </h2>
+                            {this._renderCourseList()}
+                        </Col>
+                        <Col lg={1} sm={0}></Col>
+                    </Row>
+                    </div>
+                    <hr />
+                    <Row>
+                        <Col lg={1} sm={0}></Col>
+                        <Col lg={10} sm={12}>
+                            {this._availableCredits()}
+                        </Col>
+                        <Col lg={1} sm={0}></Col>
+                    </Row>
+                    <hr />
+                    <div className="table">
+                    <Row>
+                        <Col lg={1} sm={0}></Col>
+                        <Col lg={10} sm={12}>
+                            <h2>Registered Courses: </h2>
+                            <Registrations />
+                        </Col>
+                        <Col lg={1} sm={0}></Col>
+                    </Row>
+                    </div>
+                </Container>
+                {/*<LogoutContainer/>*/}
+                {/*<Link to={profileLink}> Profile </Link>*/}
+                {/*<h1>These are courses!</h1>*/}
+                {/*<div>{this._renderCourseList()}</div>*/}
+                {/*<div>{this._availableCredits()}</div>*/}
+                {/*<Registrations/>*/}
 
-        </div>);
+            </div>
+        );
     }
 
     _registerAClass(id) {
@@ -56,13 +108,22 @@ class Courses extends React.Component {
         if ( this.props.loading === true) {
             return (<h3>Loading...</h3>)
         } else if (this.props.user.student !== null) {
-            return <h2>available Credits: {this.props.user.student.availableCredits}</h2>
+            return <h2>Available Credits: {this.props.user.student.availableCredits}</h2>
         } else {
             return '';
         }
     }
+
     _renderCourseList() {
-        const coursesRows = this.props.courses.map(course => (
+        const courses = this.props.courses;
+        if (courses.length === 0) {
+            return (
+                <div>There are no available courses yet</div>
+            )
+        }
+        const sorted = courses.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+        // console.dir(sorted);
+        const coursesRows = sorted.map(course => (
             <tr key={course._id}>
                 <td>{course._id}</td>
                 <td>{course.capacity}</td>
@@ -74,27 +135,21 @@ class Courses extends React.Component {
                            (this.props.user.student !== null && this.props.user.student.availableCredits === 0)}
                            onClick={() => this._registerAClass(course._id)}/> </td>
             </tr>));
-        return (<table>
+        return (<Table striped size="sm" bordered responsive>
             <thead>
             <tr>
-                <th>id</th>
-                <th>capacity</th>
-                <th>location</th>
-                <th>start</th>
-                <th>end</th>
+                <th>CourseID</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Start Time</th>
+                <th>End Time</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {coursesRows}
-            {/*<tr key={'input'}>*/}
-            {/*    <td><input type={'text'} value={this.state.name} onChange={e => this._handleFormUpdate(e, 'name')}/></td>*/}
-            {/*    <td><input type={'date'} value={this.state.birthday} onChange={e => this._handleFormUpdate(e, 'birthday')}/></td>*/}
-            {/*    <td><input type={'number'} value={this.state.health} onChange={e => this._handleFormUpdate(e, 'health')}/></td>*/}
-            {/*    <td><input type='button' value='Add' onClick={() => this._addPokemon()}/> </td>*/}
-            {/*</tr>*/}
             </tbody>
-        </table>)
+        </Table>)
     }
 }
 

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {fetchRegistrationCourses, cancelRegistration} from '../studentActions/registration.action'
 import {withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
+import {Table} from "react-bootstrap";
 
 
 class Registrations extends React.Component {
@@ -22,7 +23,6 @@ class Registrations extends React.Component {
         }
 
         return (<div>
-            <h1>Registered</h1>
             <div>{this._renderCourseList()}</div>
         </div>);
     }
@@ -33,45 +33,74 @@ class Registrations extends React.Component {
 
     _renderCourseList() {
         const courseRows = this.props.course.courses;
+        // console.dir(courseRows);
         const registrationRows = this.props.registration;
-        // if(registrationRows !== null && registrationRows.length > 0)  {
-        //     for (let i = 0; i < registrationRows.length; i++) {
-        //         for (let j = 0; j < courseRows.length; j++) {
-        //             if (registrationRows[i].courseId = courseRows[j]._id) {
-        //                 registrationRows[i].capacity = courseRows[j].capacity;
-        //                 registrationRows[i].location = courseRows[j].location;
-        //                 registrationRows[i].startTime = courseRows[j].startTime;
-        //                 registrationRows[i].endTime = courseRows[j].endTime;
-        //             }
-        //         }
-        //     }
-        // }
-
-        const rows = registrationRows.map(registration => (
+        // console.dir(registrationRows);
+        const registered = [];
+        for (let i = 0; i < registrationRows.length; i++) {
+            let found = courseRows.find(function(element) {
+                return element._id === registrationRows[i].courseId;
+            });
+            found.registrationId = registrationRows[i]._id;
+            registered.push(found);
+        }
+        // console.dir(registered)
+        if (registrationRows.length === 0) {
+            return (
+                <div>You have no class registration yet</div>
+            )
+        }
+        const sorted = registered.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+        // console.dir(sorted);
+        const registeredRows = sorted.map(registration => (
             <tr key={registration._id}>
-                <td>{registration.courseId}</td>
+                <td>{registration._id}</td>
                 <td>{registration.capacity}</td>
                 <td>{registration.location}</td>
                 <td>{new Date(registration.startTime).toUTCString()}</td>
                 <td>{new Date(registration.endTime).toUTCString()}</td>
-                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id)}/> </td>
+                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration.registrationId)}/> </td>
             </tr>));
-        return (<table>
+        return (<Table striped size="sm" bordered responsive>
             <thead>
             <tr>
-                {/*<th>id</th>*/}
-                <th>courseId</th>
-                <th>capacity</th>
-                <th>location</th>
-                <th>start</th>
-                <th>end</th>
+                <th>CourseId</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Start Time</th>
+                <th>End Time</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {rows}
+            {registeredRows}
             </tbody>
-        </table>)
+        </Table>)
+
+        // const rows = registrationRows.map(registration => (
+        //     <tr key={registration._id}>
+        //         <td>{registration.courseId}</td>
+        //         <td>{registration.capacity}</td>
+        //         <td>{registration.location}</td>
+        //         <td>{new Date(registration.startTime).toUTCString()}</td>
+        //         <td>{new Date(registration.endTime).toUTCString()}</td>
+        //         <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration._id)}/> </td>
+        //     </tr>));
+        // return (<Table striped size="sm" bordered responsive>
+        //     <thead>
+        //     <tr>
+        //         <th>CourseId</th>
+        //         <th>Capacity</th>
+        //         <th>Location</th>
+        //         <th>Start Time</th>
+        //         <th>End Time</th>
+        //         <th></th>
+        //     </tr>
+        //     </thead>
+        //     <tbody>
+        //     {rows}
+        //     </tbody>
+        // </Table>)
     }
 }
 

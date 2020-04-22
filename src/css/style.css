@@ -19,3 +19,11 @@ img {
 .profile p {
     color: steelblue;
 }
+
+.navItems {
+    float: right;
+}
+
+.table {
+    margin-top: 20px;
+}
