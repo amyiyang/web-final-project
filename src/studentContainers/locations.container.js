@@ -5,6 +5,7 @@ import {clear, login} from "../studentActions/user.action";
 
 import CurrentLocation from './Map';
 import {Nav, Navbar} from "react-bootstrap";
+import { withRouter } from 'react-router-dom';
 
 class Locations extends React.Component {
     constructor(props) {
@@ -48,7 +49,14 @@ class Locations extends React.Component {
             url: "https://img.icons8.com/ultraviolet/40/000000/marker.png"
         };
 
+        // if (this.props.user.student !== null || this.props.user.instructor !== null) {
+        //     return (<div>not loggedin</div>)
+        // } else {
+        //     return(<div>logged in</div>)
+        // }
+
         return (
+
             <div id="locations">
                 <Navbar bg="dark" variant="dark" sticky="top">
                     <Navbar.Brand href='/'>

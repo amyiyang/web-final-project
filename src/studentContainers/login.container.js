@@ -76,7 +76,7 @@ class StudentLogin extends React.Component {
                             <Col lg={6} sm={12}>
                                 <Form onSubmit={(e) => this.handleSubmit(e)}>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Username</Form.Label>
+                                        <Form.Label>Student Username</Form.Label>
                                         <Form.Control type="text" placeholder="Enter Username"
                                                       disabled={this.props.inFlight}
                                                       value={this.state.username}
@@ -92,7 +92,7 @@ class StudentLogin extends React.Component {
                                                       onChange={(e) => this.handleChange(e, 'password')}/>
                                     </Form.Group>
                                     <Button variant="primary" type="submit" value="Submit" disabled={this.props.inFlight}>
-                                        Login
+                                        Login as Student
                                     </Button>
 
                                 </Form>

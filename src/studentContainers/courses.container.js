@@ -122,7 +122,7 @@ class Courses extends React.Component {
             )
         }
         const sorted = courses.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-        // console.dir(sorted);
+        console.dir(sorted);
         const coursesRows = sorted.map(course => (
             <tr key={course._id}>
                 <td>{course._id}</td>

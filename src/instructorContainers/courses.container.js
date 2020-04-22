@@ -6,6 +6,8 @@ import {Redirect, withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
 import {Link} from "react-router-dom";
 import LogoutContainer from "../components/logout.component";
+import {Button, Col, Nav, Navbar, Row, Table} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 class Courses extends React.Component {
     constructor() {
@@ -23,15 +25,53 @@ class Courses extends React.Component {
         }
 
         const profileLink = '/instructor/profile';
-        return (<div>
-            <LogoutContainer/>
-            <Link to={profileLink}> Profile </Link>
-            <h1>These are courses!</h1>
-            <div>{this._renderCourseList()}</div>
-            <Link to={'/creatNewClass'}>
-                <button> Create a new class</button>
-            </Link>
-        </div>);
+        return (
+            <div>
+                <Navbar bg="dark" variant="dark" sticky="top">
+                    <Navbar.Brand href='/'>
+                        <img
+                            alt=""
+                            src={require('../img/whiteLogo.png')}
+                            width="30%"
+                            height="30%"
+                            className="d-inline-block align-top"
+                        />
+                    </Navbar.Brand>
+                    <Nav className="justify-content-end"  display="flex">
+                        <Nav.Link className="navItems" href={'/instructor/courses'} active>Courses</Nav.Link>
+                        <Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>
+                        <Nav.Link className="navItems" href={'/instructor/profile'}>Profile</Nav.Link>
+                        <LogoutContainer />
+                        {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}
+                    </Nav>
+                </Navbar>
+                {/*<LogoutContainer/>*/}
+                {/*<Link to={profileLink}> Profile </Link>*/}
+                <Container>
+                    <div className="table">
+                        <Row>
+                            <Col lg={1} sm={0}></Col>
+                            <Col lg={10} sm={12}>
+                                <h2>All Courses: </h2>
+                                {this._renderCourseList()}
+                            </Col>
+                            <Col lg={1} sm={0}></Col>
+                        </Row>
+                    </div>
+                    <Row>
+                        <Col lg={1} sm={0}></Col>
+                        <Col lg={10} sm={12}>
+                            <Button href={'/creatNewClass'}>Create a New Course</Button>
+                        </Col>
+                        <Col lg={1} sm={0}></Col>
+                    </Row>
+                </Container>
+                {/*<Link to={'/creatNewClass'}>*/}
+                {/*    <button> Create a new class</button>*/}
+                {/*</Link>*/}
+                {/*<h1>These are courses!</h1>*/}
+                {/*<div>{this._renderCourseList()}</div>*/}
+            </div>);
     }
 
 
@@ -58,7 +98,8 @@ class Courses extends React.Component {
         }
         console.log(rows);
 
-        const coursesRows = rows.map(course => (
+        const sorted = rows.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+        const coursesRows = sorted.map(course => (
             <tr key={course._id}>
                 <td>{course._id}</td>
                 <td>{course.capacity}</td>
@@ -68,17 +109,15 @@ class Courses extends React.Component {
                 <td>{new Date(course.endTime).toUTCString()}</td>
             </tr>));
 
-
-
-        return (<table>
+        return (<Table striped size="sm" bordered responsive>
             <thead>
             <tr>
-                <th>id</th>
-                <th>capacity</th>
-                <th>location</th>
-                <th>instructor</th>
-                <th>start</th>
-                <th>end</th>
+                <th>CourseID</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Instructor</th>
+                <th>Start Time</th>
+                <th>End Time</th>
             </tr>
             </thead>
             <tbody>
@@ -90,7 +129,7 @@ class Courses extends React.Component {
             {/*    <td><input type='button' value='Add' onClick={() => this._addPokemon()}/> </td>*/}
             {/*</tr>*/}
             </tbody>
-        </table>)
+        </Table>)
     }
 }
 
