@@ -8,6 +8,7 @@ import {combineReducers} from 'redux'
 function assignment(state = [], action) {
     switch (action.type) {
         case 'RECEIVE_ASSIGNMENT':
+            console.dir(action.assignments);
             return action.assignments
     }
     return state;

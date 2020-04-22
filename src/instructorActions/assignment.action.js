@@ -35,6 +35,7 @@ export function fetchAllAssignment() {
         dispatch(loadingAssignment());
         Axios.get(`/api/assignment/`)
             .then(response => {
+                // console.dir(response);
                 dispatch(receiveAssignment(response.data))
             },  error =>console.log('An error occurred.', error)
             )

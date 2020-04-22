@@ -28,7 +28,7 @@ class Courses extends React.Component {
         const profileLink = '/instructor/profile';
         return (
             <div>
-                <div>{this._getCourseRegistrations("5")}</div>
+                {/*<div>{this._getCourseRegistrations("5")}</div>*/}
                 <Navbar bg="dark" variant="dark" sticky="top">
                     <Navbar.Brand href='/'>
                         <img
@@ -82,19 +82,32 @@ class Courses extends React.Component {
         console.dir(this.props.assignment);
         console.dir(this.props.allCourses);
         let assignments = this.props.assignment;
-        let rows = this.props.allCourses
+        let rows = this.props.allCourses;
+        // while (assignments.length === 0 || rows.length === 0) {
+        //     this._renderCourseList();
+        // }
+        // for (let i = 0; i < rows.length; i++) {
+        //     let found = assignments.find(function(element) {
+        //         return element.courseId === rows[i]._id;
+        //     })
+        //     console.dir(found);
+        //     rows.instructor = found.instructorId;
+        //     rows.registered = this._getCourseRegistrations(rows._id);
+        // }
         //add instructor
-        for (let i = 0; i < rows.length; i++) {
-            for(let j=0; j< assignments.length; j++) {
-                console.log(i, j);
-                console.log(rows[i]._id);
-                console.log(assignments[j].courseId);
-                if(rows[i]._id === assignments[j].courseId) {
-                    console.log("true");
-                    rows[i].instructor = assignments[j].instructorId;
-                }
-            }
-        }
+        // for (let i = 0; i < rows.length; i++) {
+        //     // add registered number of students
+        //     rows[i].registered = this._getCourseRegistrations(rows[i]._id);
+        //     for(let j=0; j < assignments.length; j++) {
+        //         console.log(i, j);
+        //         console.log(rows[i]._id);
+        //         console.log(assignments[j].courseId);
+        //         if(rows[i]._id === assignments[j].courseId) {
+        //             console.log("true");
+        //             rows[i].instructor = assignments[j].instructorId;
+        //         }
+        //     }
+        // }
         console.log(rows);
 
         const sorted = rows.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -109,7 +122,7 @@ class Courses extends React.Component {
                 <td><input type='button' value='delete'
 
                            onClick={() => this._deleteAClass(course._id)}/> </td>
-                {/*<td>{this._getCourseRegistrations(course._id)}</td>*/}
+                {/*<td>{course.registered}</td>*/}
             </tr>));
 
         return (<Table striped size="sm" bordered responsive>
