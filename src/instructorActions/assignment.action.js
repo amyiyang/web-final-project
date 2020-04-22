@@ -73,3 +73,14 @@ export function create(instructor, id, capacity, location, startTime, endTime) {
             ).then(response => dispatch(createAssignment()));
     }
 }
+
+export function deleteClass(id) {
+    const courseId = id;
+    return function (dispatch) {
+        return Axios.delete(`/api/course/${id}`)
+            .then(response => {
+                    Axios.delete(`/api/assignment/courseId/${id}`)
+                }
+            ).then(response => dispatch(fetchCoursesAndAssignment()));
+    }
+}

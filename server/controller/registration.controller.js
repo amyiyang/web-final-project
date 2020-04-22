@@ -52,23 +52,24 @@ router.get('/student', function(req, res) {
         .catch((error) => console.error(`Something went wrong: ${error}`));
 });
 
-router.get('/courses', function(req, res) {
-    const courseId = req.body.courseId;
+router.get('/courses/:id', function(req, res) {
+    const courseId = req.params.id;
     // return res.status(200).send(studentId);
-    return RegistrationAccessor.getRegistrationByCourseId(courseId, req.body)
+    return RegistrationAccessor.getRegistrationByCourseId(courseId)
         .then((response) => {
-            if(response.length > 0) {
-                // const courseList = [];
-                // for (const regist of response) {
-                //     CourseAccessor.findCourseById(regist.courseId)
-                //         .then((response) => {
-                //             courseList.push(courseList);
-                //         })
-                // }
-                return res.status(200).send(response);
-            } else {
-                return res.status(400).send("No Student");
-            }
+            return res.status(200).send(response);
+            // if(response.length > 0) {
+            //     // const courseList = [];
+            //     // for (const regist of response) {
+            //     //     CourseAccessor.findCourseById(regist.courseId)
+            //     //         .then((response) => {
+            //     //             courseList.push(courseList);
+            //     //         })
+            //     // }
+            //     return res.status(200).send(response);
+            // } else {
+            //     return res.status(400).send("No Student");
+            // }
         })
         .catch((error) => console.error(`Something went wrong: ${error}`));
 })

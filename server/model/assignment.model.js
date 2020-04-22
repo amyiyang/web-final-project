@@ -36,6 +36,10 @@ function deleteAssignment(id) {
     return AssignmentModel.deleteOne({_id: id});
 }
 
+function deleteAssignmentByCourseId(id) {
+    return AssignmentModel.deleteOne(getAssignmentByCourseId(id)._id);
+}
+
 module.exports = {
     insertAssignment,
     getAllAssignment,
@@ -43,5 +47,6 @@ module.exports = {
     getAssignmentByCourseId,
     getAssignmentByInstructorId,
     updateAssignment,
-    deleteAssignment
+    deleteAssignment,
+    deleteAssignmentByCourseId
 };

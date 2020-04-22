@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {fetchCoursesAndAssignment} from '../instructorActions/assignment.action'
+import {deleteClass, fetchCoursesAndAssignment} from '../instructorActions/assignment.action'
+import {getRegistrationByCourseId} from "../instructorActions/course.action";
 // import {addPokemon, deletePokemon, fetchPokemon} from '../studentActions/pokemon.action'
 import {Redirect, withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
@@ -27,6 +28,7 @@ class Courses extends React.Component {
         const profileLink = '/instructor/profile';
         return (
             <div>
+                <div>{this._getCourseRegistrations("5")}</div>
                 <Navbar bg="dark" variant="dark" sticky="top">
                     <Navbar.Brand href='/'>
                         <img
@@ -75,9 +77,6 @@ class Courses extends React.Component {
     }
 
 
-
-
-
     _renderCourseList() {
         // console.dir(this.props.registration);
         console.dir(this.props.assignment);
@@ -107,6 +106,10 @@ class Courses extends React.Component {
                 <td>{course.instructor}</td>
                 <td>{new Date(course.startTime).toUTCString()}</td>
                 <td>{new Date(course.endTime).toUTCString()}</td>
+                <td><input type='button' value='delete'
+
+                           onClick={() => this._deleteAClass(course._id)}/> </td>
+                {/*<td>{this._getCourseRegistrations(course._id)}</td>*/}
             </tr>));
 
         return (<Table striped size="sm" bordered responsive>
@@ -118,6 +121,8 @@ class Courses extends React.Component {
                 <th>Instructor</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th></th>
+                <th>Num of Students</th>
             </tr>
             </thead>
             <tbody>
@@ -131,12 +136,23 @@ class Courses extends React.Component {
             </tbody>
         </Table>)
     }
+
+    _deleteAClass(_id) {
+        this.props.deleteAClass(_id);
+    }
+
+    _getCourseRegistrations(id) {
+        this.props.getCourseRegistration(id);
+        return this.props.courseRegistrations.length;
+    }
 }
 
 
 function mapDispatchToProps(dispatch, props) {
     return {
         getCourses: () => dispatch(fetchCoursesAndAssignment()),
+        deleteAClass: (id) => dispatch(deleteClass(id)),
+        getCourseRegistration: (id) => dispatch(getRegistrationByCourseId(id))
     }
 }
 
@@ -146,7 +162,8 @@ function mapStateToProps(state, props) {
         username: state.user.username,
         registration: state.registration.registration,
         assignment: state.assignment.assignment,
-        allCourses: state.course.courses
+        allCourses: state.course.courses,
+        courseRegistrations: state.course.registrations
     }
 };
 

@@ -30,6 +30,14 @@ router.delete('/:id', function (req, res) {
             (error) => res.status(404).send(`Error deleting Assignment:${error}`))
 });
 
+// delete assignment by course _id
+router.delete('/courseId/:id', function (req, res) {
+    const id = req.params.id;
+    return AssignmentAccessor.deleteAssignmentByCourseId(id)
+        .then((response) => res.status(200).send(response),
+            (error) => res.status(404).send(`Error deleting Assignment by CourseId:${error}`))
+});
+
 router.put('/:id', function (req, res) {
     const id = req.params.id;
     return AssignmentAccessor.updateAssignment(id, req.body)

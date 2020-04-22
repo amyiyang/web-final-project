@@ -18,7 +18,12 @@ class CreateCourseContainer extends React.Component {
     }
 
     handleSubmit(event) {
+        console.dir(this.state);
         this.props.validate(this.state);
+        // if (!this.props.valid.success) {
+        //     alert("Your input is invalid somewhere");
+        // }
+        console.log(this.props.valid.success);
         event.preventDefault();
     }
 
@@ -106,14 +111,22 @@ class CreateCourseContainer extends React.Component {
 
                                     <Form.Group controlId="formBasicPassword">
                                         <Form.Label>Location</Form.Label>
-                                        <Form.Control as="select"
-                                                        disabled={this.props.inFlight}
+                                        <Form.Control type="text" placeholder="Enter Location"
+                                                      disabled={this.props.inFlight}
                                                       value={this.state.location}
-                                                      onChange={(e) => this.handleChange(e, 'location')}>
-                                            <option value="Seattle">Seattle</option>
-                                            <option value="Redmond">Redmond</option>
-                                            </Form.Control>
+                                                      onChange={(e) => this.handleChange(e, 'location')}/>
                                     </Form.Group>
+
+                                    {/*<Form.Group>*/}
+                                    {/*    <Form.Label>Location</Form.Label>*/}
+                                    {/*    <Form.Control as="select"*/}
+                                    {/*                    disabled={this.props.inFlight}*/}
+
+                                    {/*                  onChange={(e) => this.handleChange(e, 'location')}>*/}
+                                    {/*        <option value="Seattle">Seattle</option>*/}
+                                    {/*        <option value="Redmond">Redmond</option>*/}
+                                    {/*        </Form.Control>*/}
+                                    {/*</Form.Group>*/}
 
                                     <Form.Group controlId="formBasicPassword">
                                         <Form.Label>Start Time</Form.Label>

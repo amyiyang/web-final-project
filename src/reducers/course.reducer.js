@@ -24,10 +24,18 @@ function loading(state = true, action) {
 
 }
 
+function registrations(state = [], action) {
+    switch (action.type) {
+        case 'RECEIVE_REGISTRATION':
+            return action.registrations
+    }
+    return state;
+}
 
 export default combineReducers({
     inFlight,
     courses,
     loading,
+    registrations
 });
 
