@@ -2,7 +2,7 @@ import Axios from 'axios'
 import{fetchRegistrationCourses} from "./registration.action";
 import {updateAvailableCredits} from "./user.action"
 
-function loadingCourses() {
+export function loadingCourses() {
     return {
         type: "REQUEST_COURSES"
     }

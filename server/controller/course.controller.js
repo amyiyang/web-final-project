@@ -18,6 +18,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', authParser, function (req, res) {
+    console.log(req.params.id);
     return CourseAccessor.findCourseById(req.params.id)
         .then((response) => res.status(200).send(response),
             (error) =>  res.status(404).send(`Error finding Course:${error}`));

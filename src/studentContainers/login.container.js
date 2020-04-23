@@ -71,6 +71,7 @@ class StudentLogin extends React.Component {
                             </Col>
                             <Col lg={3} sm={0}></Col>
                         </Row>
+                        <div>{error}</div>
                         <Row>
                             <Col lg={3} sm={0}></Col>
                             <Col lg={6} sm={12}>

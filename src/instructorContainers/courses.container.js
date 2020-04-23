@@ -94,20 +94,20 @@ class Courses extends React.Component {
         //     rows.instructor = found.instructorId;
         //     rows.registered = this._getCourseRegistrations(rows._id);
         // }
-        //add instructor
-        // for (let i = 0; i < rows.length; i++) {
-        //     // add registered number of students
-        //     rows[i].registered = this._getCourseRegistrations(rows[i]._id);
-        //     for(let j=0; j < assignments.length; j++) {
-        //         console.log(i, j);
-        //         console.log(rows[i]._id);
-        //         console.log(assignments[j].courseId);
-        //         if(rows[i]._id === assignments[j].courseId) {
-        //             console.log("true");
-        //             rows[i].instructor = assignments[j].instructorId;
-        //         }
-        //     }
-        // }
+        // add instructor
+        for (let i = 0; i < rows.length; i++) {
+            // add registered number of students
+            //rows[i].registered = this._getCourseRegistrations(rows[i]._id);
+            for(let j=0; j < assignments.length; j++) {
+                console.log(i, j);
+                console.log(rows[i]._id);
+                console.log(assignments[j].courseId);
+                if(rows[i]._id === assignments[j].courseId) {
+                    console.log("true");
+                    rows[i].instructor = assignments[j].instructorId;
+                }
+            }
+        }
         console.log(rows);
 
         const sorted = rows.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -119,9 +119,7 @@ class Courses extends React.Component {
                 <td>{course.instructor}</td>
                 <td>{new Date(course.startTime).toUTCString()}</td>
                 <td>{new Date(course.endTime).toUTCString()}</td>
-                <td><input type='button' value='delete'
-
-                           onClick={() => this._deleteAClass(course._id)}/> </td>
+                <td><Button href={'/editClass/'.concat(course._id)}>Edit</Button></td>
                 {/*<td>{course.registered}</td>*/}
             </tr>));
 
@@ -135,7 +133,7 @@ class Courses extends React.Component {
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th></th>
-                <th>Num of Students</th>
+                {/*<th>Num of Students</th>*/}
             </tr>
             </thead>
             <tbody>

@@ -20,6 +20,7 @@ import InstructorCourses from "./instructorContainers/courses.container";
 import LoggedInComponent from "./components/loggedin.component";
 import InstructorProfile from "./instructorContainers/profile.container"
 import CreatNewClass from "./instructorContainers/createCourse.container"
+import EditCourse from "./instructorContainers/editCourse.container";
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 
@@ -39,6 +40,8 @@ ReactDOM.render(
                 <Route path="/instructor/courses" component={LoggedInComponent(InstructorCourses)}/>
                 <Route path="/instructor/profile" component={LoggedInComponent(InstructorProfile)}/>
                 <Route path="/creatNewClass" component={LoggedInComponent(CreatNewClass)}/>
+                <Route path="/editClass/:id" component={LoggedInComponent(EditCourse)}/>
+                {/*<Route path="/editClass/:id" component={EditCourse}/>*/}
             </Switch>
         </BrowserRouter>
     </Provider>,

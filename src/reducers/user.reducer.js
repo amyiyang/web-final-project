@@ -17,8 +17,10 @@ function valid(state = {
             console.dir(action)
             if (!action.instructor || !action.id || !action.capacity || !action.location
             || !action.startTime|| !action.endTime) {
+                console.log("inside validation, false");
                 return {...state, message: 'All fields are required'};
             }
+            console.log("inside validation, true");
             return {success: true, message: '',};
         default:
             return {success: false, message: ''};
@@ -82,7 +84,7 @@ function inFlight(state = false, action) {
 function redirect(state = '', action) {
     if (action.type === 'LOGIN_SUCCESS' || action.type === 'REGISTER_SUCCESS') {
         return '/courses/';
-    } else if (action.type === 'INSTRUCTOR_LOGIN_SUCCESS' || action.type === 'CREATE_ASSIGNMENT') {
+    } else if (action.type === 'INSTRUCTOR_LOGIN_SUCCESS' || action.type === 'CREATE_ASSIGNMENT' || action.type === 'UPDATED_COURSE_ASSIGNMENT') {
         return '/instructor/courses';
     } else if (action.type === 'LOGOUT_SUCCESS') {
         return '/login';

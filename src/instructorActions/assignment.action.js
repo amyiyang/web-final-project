@@ -1,6 +1,7 @@
 import Axios from "axios";
 import {fetchAllRegistration, fetchRegistrationCourses} from "../studentActions/registration.action";
 import {fetchCourses} from "../studentActions/course.action"
+import {getAssignmentByCourseId} from "../instructorActions/course.action"
 
 export function fetchCoursesAndAssignment(){
     return function(dispatch) {
@@ -83,5 +84,27 @@ export function deleteClass(id) {
                     Axios.delete(`/api/assignment/courseId/${id}`)
                 }
             ).then(response => dispatch(fetchCoursesAndAssignment()));
+    }
+}
+
+export function updateCourse(course) {
+    const assignment = {
+        instructorId: course.instructor,
+        courseId: course.id
+    }
+    return function (dispatch) {
+        console.dir(course);
+        return Axios.put(`/api/course/${course.id}`, course)
+            .then(response =>
+                dispatch(getAssignmentByCourseId(course.id))
+            ).then ((response) =>
+                Axios.put(`/api/assignment/${response.assignment[0]._id}`, assignment)
+            ).then(response => dispatch(updateCourseAssignment()))
+    }
+}
+
+function updateCourseAssignment() {
+    return {
+        type: "UPDATED_COURSE_ASSIGNMENT"
     }
 }
