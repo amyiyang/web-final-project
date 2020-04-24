@@ -4,8 +4,9 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow, MarkerWithLabel } from 'goog
 import {clear, login} from "../studentActions/user.action";
 
 import CurrentLocation from './Map';
-import {Nav, Navbar} from "react-bootstrap";
+import {Col, Container, Nav, Navbar, Row} from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
+import Figure from "react-bootstrap/Figure";
 
 class Locations extends React.Component {
     constructor(props) {
@@ -36,8 +37,8 @@ class Locations extends React.Component {
 
     render() {
         const mapStyles = {
-            width: '100%',
-            height: '100%',
+            width: '20%',
+            height: '60%',
         };
 
         const exitSpace = {lat: 47.680851, lng: -122.323853};
@@ -48,6 +49,8 @@ class Locations extends React.Component {
         const image = {
             url: "https://img.icons8.com/ultraviolet/40/000000/marker.png"
         };
+        const blue = require('../img/blueMarker.png');
+        const red = require('../img/redMarker.png');
 
         // if (this.props.user.student !== null || this.props.user.instructor !== null) {
         //     return (<div>not loggedin</div>)
@@ -56,7 +59,6 @@ class Locations extends React.Component {
         // }
 
         return (
-
             <div id="locations">
                 <Navbar bg="dark" variant="dark" sticky="top">
                     <Navbar.Brand href='/'>
@@ -69,17 +71,51 @@ class Locations extends React.Component {
                         />
                     </Navbar.Brand>
                     <Nav className="justify-content-end"  display="flex">
-                        <Nav.Link href={'/'}>Student Login</Nav.Link>
-                        <Nav.Link href={'/instructorLogin'}>Instructor Login</Nav.Link>
+                        <Nav.Link href={'/landing'}>Home</Nav.Link>
                         <Nav.Link href={'/locations'} active>Locations</Nav.Link>
+                        <Nav.Link href={'/login'}>Student Login</Nav.Link>
+                        <Nav.Link href={'/instructorLogin'}>Instructor Login</Nav.Link>
                     </Nav>
                 </Navbar>
+
+                <div id="mapItem">
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Figure>
+                                    <Figure.Image
+                                        width={50}
+                                        height={50}
+                                        src={blue}
+                                    />
+                                    <Figure.Caption>
+                                        Your Current Location
+                                    </Figure.Caption>
+                                </Figure>
+                            </Col>
+                            <Col>
+
+                                <Figure>
+                                    <Figure.Image
+                                        width={50}
+                                        height={50}
+                                        src={red}
+                                    />
+                                    <Figure.Caption>
+                                        Class Locations We Offer
+                                    </Figure.Caption>
+                                </Figure>
+                            </Col>
+                        </Row>
+                    </Container>
+
+
                 <CurrentLocation
                     centerAroundCurrentLocation
                     google={this.props.google}
                 >
                     <Marker className='currentLocMarker' onClick={this.onMarkerClick} name={'current location'}
-                            icon={image}/>
+                            icon={blue}/>
                     <InfoWindow
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
@@ -89,7 +125,7 @@ class Locations extends React.Component {
                             <h5>{this.state.selectedPlace.name}</h5>
                         </div>
                     </InfoWindow>
-                    <Marker position={exitSpace} onClick={this.onMarkerClick} name={seattleLoc}/>
+                    <Marker position={exitSpace} onClick={this.onMarkerClick} name={seattleLoc} icon={red}/>
                     <InfoWindow
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
@@ -99,7 +135,7 @@ class Locations extends React.Component {
                             <h5>{this.state.selectedPlace.name}</h5>
                         </div>
                     </InfoWindow>
-                    <Marker position={premiere} onClick={this.onMarkerClick} name={redmondLoc} />
+                    <Marker position={premiere} onClick={this.onMarkerClick} name={redmondLoc} icon={red} />
                     <InfoWindow
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
@@ -111,7 +147,8 @@ class Locations extends React.Component {
                     </InfoWindow>
                 </CurrentLocation>
                 {/*<input id="pac-input" className="controls" type="text" placeholder="Search Box" />*/}
-                <div id="map">
+                <div id="map" style={mapStyles}>
+                </div>
                 </div>
             </div>
         )

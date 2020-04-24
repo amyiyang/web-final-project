@@ -31,3 +31,12 @@ img {
 #createCourse {
     margin-top: 50px;
 }
+
+#mapItem {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#locations {
+    background-color: whitesmoke;
+}

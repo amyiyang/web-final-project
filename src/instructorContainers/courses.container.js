@@ -41,7 +41,7 @@ class Courses extends React.Component {
                     </Navbar.Brand>
                     <Nav className="justify-content-end"  display="flex">
                         <Nav.Link className="navItems" href={'/instructor/courses'} active>Courses</Nav.Link>
-                        <Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>
+                        {/*<Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>*/}
                         <Nav.Link className="navItems" href={'/instructor/profile'}>Profile</Nav.Link>
                         <LogoutContainer />
                         {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}
@@ -119,7 +119,7 @@ class Courses extends React.Component {
                 <td>{course.instructor}</td>
                 <td>{new Date(course.startTime).toUTCString()}</td>
                 <td>{new Date(course.endTime).toUTCString()}</td>
-                <td><Button href={'/editClass/'.concat(course._id)}>Edit</Button></td>
+                <td><Button href={'/editClass/'.concat(course._id)} variant={'link'}>Edit</Button></td>
                 {/*<td>{course.registered}</td>*/}
             </tr>));
 

@@ -115,7 +115,7 @@ class EditCourseContainer extends React.Component {
                     </Navbar.Brand>
                     <Nav className="justify-content-end"  display="flex">
                         <Nav.Link className="navItems" href={'/instructor/courses'}>Courses</Nav.Link>
-                        <Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>
+                        {/*<Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>*/}
                         <Nav.Link className="navItems" href={'/instructor/profile'}>Profile</Nav.Link>
                         <LogoutContainer />
                         {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}

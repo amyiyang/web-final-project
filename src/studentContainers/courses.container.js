@@ -7,7 +7,7 @@ import {selectUser, getStudent} from "../studentActions/user.action";
 import Registrations from "./registeredCourses.container";
 import {Link} from "react-router-dom";
 import LogoutContainer from "../components/logout.component";
-import {Nav, Navbar, Container, Row, Col, Form, Table} from "react-bootstrap";
+import {Nav, Navbar, Container, Row, Col, Form, Table, Button} from "react-bootstrap";
 
 class Courses extends React.Component {
     constructor() {
@@ -42,7 +42,7 @@ class Courses extends React.Component {
                     </Navbar.Brand>
                     <Nav className="justify-content-end"  display="flex">
                         <Nav.Link className="navItems" href={'/courses'} active>Courses</Nav.Link>
-                        <Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>
+                        {/*<Nav.Link className="navItems" href={'/locations'}>Locations</Nav.Link>*/}
                         <Nav.Link className="navItems" href={'/profile'}>Profile</Nav.Link>
                         <LogoutContainer />
                         {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}
@@ -130,10 +130,16 @@ class Courses extends React.Component {
                 <td>{course.location}</td>
                 <td>{new Date(course.startTime).toUTCString()}</td>
                 <td>{new Date(course.endTime).toUTCString()}</td>
-                <td><input type='button' value='Register'
-                           disabled={this._isRegistered(course._id) ||
-                           (this.props.user.student !== null && this.props.user.student.availableCredits === 0)}
-                           onClick={() => this._registerAClass(course._id)}/> </td>
+                <td>
+                    {/*<input type='button' value='Register'*/}
+                    {/*       disabled={this._isRegistered(course._id) ||*/}
+                    {/*       (this.props.user.student !== null && this.props.user.student.availableCredits === 0)}*/}
+                    {/*       onClick={() => this._registerAClass(course._id)}/>*/}
+                    <Button variant={'link'} value='Register'
+                            disabled={this._isRegistered(course._id) ||
+                            (this.props.user.student !== null && this.props.user.student.availableCredits === 0)}
+                            onClick={() => this._registerAClass(course._id)}>Register</Button>
+                </td>
             </tr>));
         return (<Table striped size="sm" bordered responsive>
             <thead>

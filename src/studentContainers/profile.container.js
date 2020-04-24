@@ -42,7 +42,7 @@ class Profile extends React.Component {
                         </Navbar.Brand>
                         <Nav className="justify-content-end"  display="flex">
                             <Nav.Link href={'/courses'}>Courses</Nav.Link>
-                            <Nav.Link href={'/locations'}>Locations</Nav.Link>
+                            {/*<Nav.Link href={'/locations'}>Locations</Nav.Link>*/}
                             <Nav.Link href={'/profile'} active>Profile</Nav.Link>
                             <LogoutContainer />
                             {/*<Nav.Link href={'/locations'}><LogoutContainer /></Nav.Link>*/}

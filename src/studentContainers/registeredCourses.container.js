@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchRegistrationCourses, cancelRegistration} from '../studentActions/registration.action'
 import {withRouter} from "react-router";
 import {selectUser} from "../studentActions/user.action";
-import {Table} from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 
 
 class Registrations extends React.Component {
@@ -59,7 +59,10 @@ class Registrations extends React.Component {
                 <td>{registration.location}</td>
                 <td>{new Date(registration.startTime).toUTCString()}</td>
                 <td>{new Date(registration.endTime).toUTCString()}</td>
-                <td><input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration.registrationId)}/> </td>
+                <td>
+                    {/*<input type='button' value='Cancel' onClick={() => this._cancelRegistration(registration.registrationId)}/>*/}
+                    <Button variant={'link'} value='Cancel' onClick={() => this._cancelRegistration(registration.registrationId)}>Cancel</Button>
+                </td>
             </tr>));
         return (<Table striped size="sm" bordered responsive>
             <thead>

@@ -48,9 +48,10 @@ class InstructorLogin extends React.Component {
                         {/*/>*/}
                     </Navbar.Brand>
                     <Nav className="justify-content-end"  display="flex">
-                        <Nav.Link href={'/'}>Student Login</Nav.Link>
+                        <Nav.Link href={'/landing'}>Home</Nav.Link>
+                        <Nav.Link href={'/login'}>Student Login</Nav.Link>
                         <Nav.Link href={'/instructorLogin'} active>Instructor Login</Nav.Link>
-                        <Nav.Link href={'/locations'}>Locations</Nav.Link>
+                        {/*<Nav.Link href={'/locations'}>Locations</Nav.Link>*/}
                     </Nav>
                 </Navbar>
 

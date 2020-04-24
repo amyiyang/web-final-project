@@ -21,6 +21,7 @@ import LoggedInComponent from "./components/loggedin.component";
 import InstructorProfile from "./instructorContainers/profile.container"
 import CreatNewClass from "./instructorContainers/createCourse.container"
 import EditCourse from "./instructorContainers/editCourse.container";
+import LandingPage from "./landing/landing.container"
 const userStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 
@@ -31,7 +32,8 @@ ReactDOM.render(
             {/*<Link to={'/locations'}>Locations</Link>*/}
             <Switch>
                 <Route path="/login" component={StudentLogin}/>
-                <Redirect exact from="/" to="login"/>
+                <Route path="/landing" component={LandingPage}/>
+                <Redirect exact from="/" to="landing"/>
                 <Route path="/locations" component={Locations}/>
                 <Route path="/register" component={StudentRegister}/>
                 <Route path="/courses" component={LoggedInComponent(Courses)}/>
