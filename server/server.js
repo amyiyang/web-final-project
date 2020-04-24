@@ -17,7 +17,7 @@ const session = require('express-session');
 // Make sure MongoDB is running!
 const mongoEndpoint = 'mongodb://127.0.0.1/pokemon_app';
 // useNewUrlParser is not required, but the old parser is deprecated
-mongoose.connect(mongoEndpoint || process.env.MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect( process.env.MONGODB_URI || mongoEndpoint, { useNewUrlParser: true });
 
 // Get the connection string
 const db = mongoose.connection;
