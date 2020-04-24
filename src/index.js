@@ -33,7 +33,7 @@ ReactDOM.render(
             <Switch>
                 <Route path="/login" component={StudentLogin}/>
                 <Route path="/landing" component={LandingPage}/>
-                <Redirect exact from="/" to="landing"/>
+                <Redirect exact from="/" to="/landing"/>
                 <Route path="/locations" component={Locations}/>
                 <Route path="/register" component={StudentRegister}/>
                 <Route path="/courses" component={LoggedInComponent(Courses)}/>
