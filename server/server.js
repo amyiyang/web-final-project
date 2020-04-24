@@ -8,6 +8,7 @@ const registration = require('./controller/registration.controller');
 const assignment = require('./controller/assignment.controller');
 const instructor = require('./controller/instructor.controller');
 const app = express();
+require('dotenv').config();
 
 const mongoose = require('mongoose');
 const session = require('express-session');
