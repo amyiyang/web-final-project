@@ -26,6 +26,7 @@ class EditCourseContainer extends React.Component {
         //     course: {id: key, capacity:'', location: '', startTime: '', endTime: ''},
         //     assignment: {instructorId: '', _id: '', courseId: ''}
         // };
+
     }
 
     // _renderCourseInfo() {
@@ -141,7 +142,7 @@ class EditCourseContainer extends React.Component {
                                         <Form.Label>Instructor's Email: {assignment.instructorId}</Form.Label>
                                         <Form.Control type="email" placeholder={'Enter new instructor email'}
                                                       disabled={this.props.inFlight}
-                                                      value={this.state.instructor}
+                                                      value={this.state.instructorId}
                                                       onChange={(e) => this.handleChange(e, 'instructor')}
                                         />
                                     </Form.Group>

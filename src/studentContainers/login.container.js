@@ -72,7 +72,6 @@ class StudentLogin extends React.Component {
                             </Col>
                             <Col lg={3} sm={0}></Col>
                         </Row>
-                        <div>{error}</div>
                         <Row>
                             <Col lg={3} sm={0}></Col>
                             <Col lg={6} sm={12}>
@@ -93,6 +92,7 @@ class StudentLogin extends React.Component {
                                                       value={this.state.password}
                                                       onChange={(e) => this.handleChange(e, 'password')}/>
                                     </Form.Group>
+                                    <h3>{error}</h3>
                                     <Button variant="primary" type="submit" value="Submit" disabled={this.props.inFlight}>
                                         Login as Student
                                     </Button>

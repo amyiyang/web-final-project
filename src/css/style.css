@@ -11,6 +11,11 @@ img {
     text-align: center;
 }
 
+.loginForm h3{
+    font-size: small;
+    color: brown;
+}
+
 .profile {
     text-align: center;
     margin-top: 80px;

@@ -116,7 +116,7 @@ class Register extends React.Component {
                                                       value={this.state.validatePassword}
                                                       onChange={(e) => this.handleChange(e, 'validatePassword')}/>
                                     </Form.Group>
-
+                                    <h3>{error}</h3>
                                     <Button variant="primary" type="submit" value="Submit" disabled={this.props.inFlight}>
                                         Register
                                     </Button>

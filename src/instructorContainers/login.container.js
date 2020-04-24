@@ -87,6 +87,7 @@ class InstructorLogin extends React.Component {
                                                       value={this.state.password}
                                                       onChange={(e) => this.handleChange(e, 'password')}/>
                                     </Form.Group>
+                                    <h3>{error}</h3>
                                     <Button variant="primary" type="submit" value="Submit" disabled={this.props.inFlight}>
                                         Login as Instructor
                                     </Button>
